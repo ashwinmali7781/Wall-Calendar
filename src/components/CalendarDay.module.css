@@ -1,0 +1,96 @@
+.day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+  user-select: none;
+}
+
+.day:hover:not(.start):not(.end):not(.inRange) {
+  background: var(--accent-muted);
+  transform: scale(1.08);
+}
+
+.faded {
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.num {
+  line-height: 1;
+  z-index: 1;
+  position: relative;
+}
+
+.today .num {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sat {
+  color: var(--sat);
+  font-weight: 600;
+}
+
+.sun {
+  color: var(--sun);
+  font-weight: 600;
+}
+
+.endpoint {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  transform: scale(1.12) !important;
+  box-shadow: 0 4px 12px rgba(46, 156, 202, 0.45);
+  z-index: 2;
+}
+
+.endpoint .num {
+  color: #fff !important;
+  border: none !important;
+}
+
+.inRange {
+  background: var(--accent-light);
+  border-radius: 0;
+  color: var(--accent-dark);
+}
+
+.start.inRange, .start {
+  border-radius: 50% 0 0 50%;
+}
+
+.end.inRange, .end {
+  border-radius: 0 50% 50% 0;
+}
+
+.dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sun);
+}
+
+.endpoint .dot {
+  background: rgba(255,255,255,0.8);
+}
