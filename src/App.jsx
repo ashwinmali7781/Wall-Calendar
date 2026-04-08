@@ -26,9 +26,9 @@ export default function App() {
       <main className={styles.main}>
         <WallCalendar theme={theme} onThemeToggle={toggleTheme} />
       </main>
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
         Built with React + Vite · {new Date().getFullYear()}
-      </footer>
+      </footer> */}
     </div>
   );
 }
