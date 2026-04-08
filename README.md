@@ -1,6 +1,12 @@
-# 🗓️ Wall Calendar — React + Vite
+# 🗓️ Wall Calendar
 
-A polished, interactive wall calendar component inspired by a physical desk calendar aesthetic. Features a day-range selector, integrated notes, dark mode, and smooth page-flip animations.
+A polished, interactive wall calendar built with **React + Vite**, inspired by a physical wall calendar aesthetic. Features a day-range selector, integrated notes, dark/light mode, page-flip animations, and full mobile responsiveness.
+
+---
+
+## 🔗 Live Demo
+
+> Deployed on Render: `https://wall-calendar-1.onrender.com`
 
 ---
 
@@ -8,45 +14,69 @@ A polished, interactive wall calendar component inspired by a physical desk cale
 
 | Feature | Details |
 |---|---|
-| **Wall Calendar Aesthetic** | Hero image panel with diagonal wave overlay; spiral binding visual |
-| **Day Range Selector** | Click start → click end; live hover preview; start/end/in-between visual states |
-| **Integrated Notes** | Per-month notes textarea with selected range display |
-| **Dark / Light Theme** | Persisted to `localStorage`; toggle button on the hero image |
-| **Page Flip Animation** | Subtle 3D perspective flip on month navigation |
-| **Holiday Markers** | Dot indicator + banner for public holidays |
-| **Fully Responsive** | Desktop: side-by-side grid + notes. Mobile: tab-based switcher |
-| **Dynamic Hero Images** | Each month has a unique Unsplash landscape photo |
+| **Wall Calendar Aesthetic** | Hero landscape image per month with diagonal wave overlay and spiral binding |
+| **Day Range Selector** | Click a start date → click an end date; live hover preview with color states for start, end, and in-between days |
+| **Integrated Notes** | Per-month notes textarea; updates placeholder and range display when a date range is selected |
+| **Dark / Light Theme** | Toggle via the ☽/☀︎ button; preference persisted in `localStorage` |
+| **Page Flip Animation** | Subtle 3D perspective flip animation on month navigation |
+| **Holiday Markers** | Dot indicator on holiday dates + banner for today's holiday (Indian public holidays) |
+| **Dynamic Hero Images** | Each of the 12 months has a unique Unsplash landscape photo |
+| **Fully Responsive** | Desktop: side-by-side calendar + notes panel. Mobile: tab-based switcher between calendar and notes |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Setup
 
 ### Prerequisites
-- Node.js **18+**
-- npm **9+**
+- **Node.js** 20.x or higher
+- **npm** 9+
 
-### Installation
+### Steps
 
 ```bash
-# 1. Clone / unzip the project
-cd wall-calendar
+# 1. Clone the repository
+git clone https://github.com/ashwinmali7781/Wall-Calendar.git
+cd Wall-Calendar
 
 # 2. Install dependencies
 npm install
 
-# 3. Start the dev server
+# 3. Start the development server
 npm run dev
 ```
 
-Open your browser at **http://localhost:5173**
+Open **http://localhost:5173** in your browser.
 
-### Build for production
+### Other commands
 
 ```bash
+# Build for production
 npm run build
-# Output is in the /dist folder
-npm run preview   # Preview the production build locally
+
+# Preview the production build locally
+npm run preview   # → http://localhost:4173
 ```
+
+---
+
+## ☁️ Deploying to Render
+
+### Static Site Setup
+
+1. Go to [render.com](https://render.com) → **New** → **Static Site**
+2. Connect your GitHub repo
+3. Set the following:
+
+| Field | Value |
+|---|---|
+| **Build Command** | `npm cache clean --force && rm -rf node_modules && npm install && ./node_modules/.bin/vite build` |
+| **Publish Directory** | `dist` |
+| **Node Version** | `20.x` (set via `engines` in `package.json`) |
+
+4. Click **Create Static Site**
+5. Your app will be live at `https://<your-site-name>.onrender.com`
+
+> Auto-deploy is enabled by default — every push to `main` triggers a new deploy.
 
 ---
 
@@ -54,45 +84,64 @@ npm run preview   # Preview the production build locally
 
 ```
 wall-calendar/
-├── index.html
-├── vite.config.js
-├── package.json
-├── src/
-│   ├── main.jsx            # Entry point
-│   ├── index.css           # Global styles + CSS variables
-│   ├── App.jsx             # Root component (theme management)
-│   ├── App.module.css
-│   ├── hooks/
-│   │   └── useCalendar.js  # Calendar state + notes state
-│   ├── utils/
-│   │   └── calendarUtils.js  # Grid builder, date helpers, data
-│   └── components/
-│       ├── WallCalendar.jsx        # Main calendar layout
-│       ├── WallCalendar.module.css
-│       ├── CalendarDay.jsx         # Single day cell
-│       ├── CalendarDay.module.css
-│       ├── NotesPanel.jsx          # Notes area
-│       └── NotesPanel.module.css
+├── index.html                  # HTML entry point
+├── vite.config.js              # Vite configuration
+├── package.json                # Dependencies & scripts
+├── render.yaml                 # Render deploy config
+└── src/
+    ├── main.jsx                # React entry point
+    ├── index.css               # Global styles & CSS variables
+    ├── App.jsx                 # Root component (theme management)
+    ├── App.module.css
+    ├── hooks/
+    │   └── useCalendar.js      # Calendar state, range selection & notes state
+    ├── utils/
+    │   └── calendarUtils.js    # Grid builder, date helpers, holiday data, images
+    └── components/
+        ├── WallCalendar.jsx         # Main layout: hero, spiral, nav, body
+        ├── WallCalendar.module.css
+        ├── CalendarDay.jsx          # Individual day cell with all visual states
+        ├── CalendarDay.module.css
+        ├── NotesPanel.jsx           # Notes textarea + range info
+        └── NotesPanel.module.css
 ```
 
 ---
 
-## 🎨 Design Decisions
+## 🎨 Design & Architecture Decisions
 
-- **CSS Modules** — Scoped styles, no runtime CSS-in-JS overhead
-- **No external UI library** — Full control over every pixel
-- **CSS Variables** — Clean dark/light theming with zero JS overhead
-- **localStorage** — Theme preference persisted across sessions
-- **Responsive strategy** — Desktop uses CSS Grid side-by-side layout; Mobile uses a tab switcher for calendar/notes
+- **CSS Modules** — Fully scoped styles with zero runtime overhead; no CSS-in-JS library needed
+- **No external UI library** — Every component is hand-crafted for full pixel control
+- **CSS Variables** — All colors and spacing use CSS custom properties, making dark/light theming a single attribute swap on `<html>`
+- **Custom hooks** — `useCalendar` manages all calendar navigation and range selection state; `useNotes` manages per-month note storage
+- **localStorage** — Theme preference is the only thing persisted; all other state (notes, selection) lives in React state per session
+- **Responsive strategy** — Desktop uses a 3-column CSS Grid (calendar | divider | notes). Mobile collapses to a single column with a tab switcher so both panels remain fully usable on touch screens
 
 ---
 
-## 🧪 Interaction Guide
+## 🧪 How to Use
 
-1. **Navigate months** — Use the ‹ / › arrows in the navigation pill
-2. **Select a range** — Click a start date (highlighted in blue), then click an end date
-3. **Hover preview** — While selecting, hover over dates to preview the range
-4. **Clear selection** — Click the ✕ in the Notes panel header
-5. **Add notes** — Type in the textarea; notes are saved per month
-6. **Toggle theme** — Click the ☽ / ☀︎ button on the hero image
-7. **Holidays** — Dates with a dot indicator are public holidays (hover for name)
+| Action | How |
+|---|---|
+| Navigate months | Click **‹** / **›** arrows in the pill at the top of the image |
+| Select a date range | Click a **start date** → hover to preview → click an **end date** |
+| Clear selection | Click **✕** in the Notes panel header |
+| Add notes | Type in the notes textarea (saved per month in session) |
+| Toggle dark mode | Click **☽** / **☀︎** button on the hero image |
+| View holidays | Hover over any date with a dot; today's holiday shows a banner |
+
+---
+
+## 🛠️ Tech Stack
+
+- [React 18](https://react.dev/)
+- [Vite 5](https://vitejs.dev/)
+- CSS Modules
+- [Unsplash](https://unsplash.com/) — monthly hero images
+- [Render](https://render.com/) — hosting
+
+---
+
+## 📄 License
+
+MIT — free to use and modify.
