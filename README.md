@@ -6,7 +6,7 @@ A polished, interactive wall calendar built with **React + Vite**, inspired by a
 
 ## 🔗 Live Demo
 
-> Deployed on Render: `https://wall-calendar-1.onrender.com`
+> Deployed on Render: https://wall-calendar-1.onrender.com
 
 ---
 
